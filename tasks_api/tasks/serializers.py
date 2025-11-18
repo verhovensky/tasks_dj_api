@@ -25,9 +25,7 @@ class TagSerializer(serializers.ModelSerializer):
         if self.instance:
             queryset = queryset.exclude(pk=self.instance.pk)
         if queryset.exists():
-            raise serializers.ValidationError(
-                "Тег с таким именем уже существует (регистр не учитывается)."
-            )
+            raise serializers.ValidationError("Тег с таким именем уже существует (регистр не учитывается).")
         return value
 
 
@@ -50,9 +48,7 @@ class CommentSerializer(serializers.ModelSerializer):
     def validate_task(self, value):
         """Проверяет что задача не удалена."""
         if value.is_deleted:
-            raise serializers.ValidationError(
-                "Невозможно создать комментарий к удаленной задаче."
-            )
+            raise serializers.ValidationError("Невозможно создать комментарий к удаленной задаче.")
         return value
 
 

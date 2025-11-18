@@ -52,9 +52,7 @@ User = get_user_model()
                 required=False,
                 type=int,
             ),
-            OpenApiParameter(
-                name="tags", description="Фильтр по ID тега", required=False, type=int
-            ),
+            OpenApiParameter(name="tags", description="Фильтр по ID тега", required=False, type=int),
             OpenApiParameter(
                 name="search",
                 description="Поиск в названии и описании",
@@ -275,9 +273,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         description="Получить список всех комментариев. Можно фильтровать по задаче.",
         tags=["Комментарии"],
         parameters=[
-            OpenApiParameter(
-                name="task", description="Фильтр по ID задачи", required=False, type=int
-            ),
+            OpenApiParameter(name="task", description="Фильтр по ID задачи", required=False, type=int),
             OpenApiParameter(
                 name="ordering",
                 description="Сортировка результатов по полю",
@@ -326,9 +322,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     Автоматически фильтрует комментарии по задаче, если указан параметр task_id.
     """
 
-    queryset = Comment.objects.select_related("created_by", "task").filter(
-        is_deleted=False
-    )
+    queryset = Comment.objects.select_related("created_by", "task").filter(is_deleted=False)
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated, IsActiveUser, IsCreatorOrReadOnly]
     filter_backends = [DjangoFilterBackend, OrderingFilter]

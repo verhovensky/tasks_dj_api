@@ -154,9 +154,7 @@ def test_create_task_with_valid_data_creates_task(
     "status",
     [TaskStatus.TODO, TaskStatus.IN_PROGRESS, TaskStatus.COMPLETED],
 )
-def test_create_task_with_different_statuses_creates_task(
-    user: User, status: str
-) -> None:
+def test_create_task_with_different_statuses_creates_task(user: User, status: str) -> None:
     """Тест создания задачи с разными статусами создает задачу."""
     task: Task = TaskFactory(status=status, created_by=user, updated_by=user)
 
@@ -167,9 +165,7 @@ def test_create_task_with_different_statuses_creates_task(
     "priority",
     [TaskPriority.LOW, TaskPriority.MEDIUM, TaskPriority.HIGH, TaskPriority.CRITICAL],
 )
-def test_create_task_with_different_priorities_creates_task(
-    user: User, priority: str
-) -> None:
+def test_create_task_with_different_priorities_creates_task(user: User, priority: str) -> None:
     """Тест создания задачи с разными приоритетами создает задачу."""
     task: Task = TaskFactory(priority=priority, created_by=user, updated_by=user)
 

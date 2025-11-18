@@ -10,9 +10,7 @@ if TYPE_CHECKING:
 
 
 class UserManager(DjangoUserManager["User"]):
-    def _create_user(
-        self, email: str, password: str | None, **extra_fields: Any
-    ) -> User:
+    def _create_user(self, email: str, password: str | None, **extra_fields: Any) -> User:
         if not email:
             raise ValueError("The given email must be set")
         email = self.normalize_email(email)
