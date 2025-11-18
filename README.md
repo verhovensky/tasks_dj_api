@@ -52,7 +52,7 @@ docker compose -f docker-compose.local.yml run --rm django sh -c "coverage run -
 1. Отправка подтверждения по [email, sms](https://dj-rest-auth.readthedocs.io/en/latest/api_endpoints.html#registration) через Celery
 2. Добавить task/cron job (python manage.py flushexpiredtokens)
 3. Storages для media
-4. Доработать флоут с Tags
+4. Доработать флоу с Tags
 5. Фикс deprecated UserWarning (dj-rest-auth)
 6. Фикс DeprecationWarning: UserFactory._after_postgeneration
 7. make lint, make docker-lint
