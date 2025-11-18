@@ -15,12 +15,6 @@ class Command(BaseCommand):
                 password=settings.DEFAULT_ADMIN_PASSWORD,
                 name="Admin",
             )
-            self.stdout.write(
-                self.style.SUCCESS(
-                    f"Superuser created successfully with email: {admin_email}"
-                )
-            )
+            self.stdout.write(self.style.SUCCESS(f"Superuser created successfully with email: {admin_email}"))
         else:
-            self.stdout.write(
-                self.style.WARNING("Superuser already exists, skipping creation")
-            )
+            self.stdout.write(self.style.WARNING("Superuser already exists, skipping creation"))

@@ -189,14 +189,10 @@ class TaskAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         """Оптимизировать queryset с помощью select_related и prefetch_related."""
         queryset = super().get_queryset(request)
-        queryset = queryset.select_related(
-            "created_by", "updated_by", "assigned_to"
-        ).prefetch_related("tags", "comments")
-        queryset = queryset.annotate(
-            comments_count_annotation=Count(
-                "comments", filter=Q(comments__is_deleted=False)
-            )
+        queryset = queryset.select_related("created_by", "updated_by", "assigned_to").prefetch_related(
+            "tags", "comments"
         )
+        queryset = queryset.annotate(comments_count_annotation=Count("comments", filter=Q(comments__is_deleted=False)))
         return queryset
 
     @admin.display(description=_("Status"))
@@ -234,9 +230,7 @@ class TaskAdmin(admin.ModelAdmin):
     def is_overdue_display(self, obj):
         """Отобразить статус просрочки с иконкой."""
         if obj.is_overdue:
-            return format_html(
-                '<span style="color: red; font-weight: bold;">⚠ {}</span>', _("Overdue")
-            )
+            return format_html('<span style="color: red; font-weight: bold;">⚠ {}</span>', _("Overdue"))
         return format_html('<span style="color: green;">✓ {}</span>', _("On track"))
 
     @admin.display(description=_("Comments"), ordering="comments_count_annotation")

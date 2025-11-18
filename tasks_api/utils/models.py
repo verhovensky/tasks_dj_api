@@ -23,9 +23,9 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
+    class Meta:
+        abstract = True
+
     def soft_delete(self):
         self.is_deleted = True
         self.save(update_fields=["is_deleted"])
-
-    class Meta:
-        abstract = True

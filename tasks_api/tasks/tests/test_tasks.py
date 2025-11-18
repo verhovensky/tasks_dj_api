@@ -438,12 +438,8 @@ def test_filter_tasks_by_status_returns_filtered_results(
     tasks_list_url: str = "/api/tasks/",
 ) -> None:
     """Тест фильтрации задач по статусу возвращает отфильтрованные результаты."""
-    matching_task: Task = TaskFactory(
-        status=filter_status, created_by=user, updated_by=user
-    )
-    non_matching_task: Task = TaskFactory(
-        status=TaskStatus.TODO, created_by=user, updated_by=user
-    )
+    matching_task: Task = TaskFactory(status=filter_status, created_by=user, updated_by=user)
+    non_matching_task: Task = TaskFactory(status=TaskStatus.TODO, created_by=user, updated_by=user)
 
     response = authenticated_client.get(tasks_list_url, {"status": filter_status})
 
@@ -465,12 +461,8 @@ def test_filter_tasks_by_priority_returns_filtered_results(
     tasks_list_url: str = "/api/tasks/",
 ) -> None:
     """Тест фильтрации задач по приоритету возвращает отфильтрованные результаты."""
-    matching_task: Task = TaskFactory(
-        priority=filter_priority, created_by=user, updated_by=user
-    )
-    non_matching_task: Task = TaskFactory(
-        priority=TaskPriority.LOW, created_by=user, updated_by=user
-    )
+    matching_task: Task = TaskFactory(priority=filter_priority, created_by=user, updated_by=user)
+    non_matching_task: Task = TaskFactory(priority=TaskPriority.LOW, created_by=user, updated_by=user)
 
     response = authenticated_client.get(tasks_list_url, {"priority": filter_priority})
 
@@ -574,15 +566,9 @@ def test_order_tasks_by_field_returns_ordered_results(
     tasks_list_url: str = "/api/tasks/",
 ) -> None:
     """Тест сортировки задач по полю возвращает отсортированные результаты."""
-    task1: Task = TaskFactory(
-        priority=TaskPriority.LOW, created_by=user, updated_by=user
-    )
-    task2: Task = TaskFactory(
-        priority=TaskPriority.MEDIUM, created_by=user, updated_by=user
-    )
-    task3: Task = TaskFactory(
-        priority=TaskPriority.HIGH, created_by=user, updated_by=user
-    )
+    task1: Task = TaskFactory(priority=TaskPriority.LOW, created_by=user, updated_by=user)
+    task2: Task = TaskFactory(priority=TaskPriority.MEDIUM, created_by=user, updated_by=user)
+    task3: Task = TaskFactory(priority=TaskPriority.HIGH, created_by=user, updated_by=user)
     tasks_list: list[Task] = [task1, task2, task3]
 
     response = authenticated_client.get(tasks_list_url, {"ordering": ordering_field})
@@ -699,9 +685,7 @@ def test_assign_task_nonexistent_user_returns_bad_request(
 # Permission Tests - Task Update/Delete
 
 
-def test_update_task_assignee_returns_forbidden(
-    api_client: APIClient, updated_title: str = "Updated"
-) -> None:
+def test_update_task_assignee_returns_forbidden(api_client: APIClient, updated_title: str = "Updated") -> None:
     """Тест обновления задачи назначенным пользователем возвращает 403."""
     context = create_assigned_task()
     api_client.force_authenticate(user=context.assignee)

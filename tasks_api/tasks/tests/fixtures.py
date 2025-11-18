@@ -51,9 +51,7 @@ def create_assigned_task(**kwargs) -> AssignedTaskContext:
     return AssignedTaskContext(task=task, creator=creator, assignee=assignee)
 
 
-def create_task_with_comments(
-    comments_count: int = 2, **task_kwargs
-) -> TaskWithCommentsContext:
+def create_task_with_comments(comments_count: int = 2, **task_kwargs) -> TaskWithCommentsContext:
     """
     Создать задачу с несколькими комментариями от разных пользователей.
 

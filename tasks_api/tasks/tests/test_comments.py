@@ -352,9 +352,7 @@ def test_create_comment_nonexistent_task_returns_bad_request(
     """Тест создания комментария к несуществующей задаче возвращает 400."""
     url: str = "/api/comments/"
 
-    response = authenticated_client.post(
-        url, {"task": nonexistent_task_id, "content": comment_content}
-    )
+    response = authenticated_client.post(url, {"task": nonexistent_task_id, "content": comment_content})
 
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "task" in response.data
@@ -369,9 +367,7 @@ def test_create_comment_deleted_task_returns_bad_request(
     deleted_task: Task = TaskFactory(created_by=user, updated_by=user, is_deleted=True)
     url: str = "/api/comments/"
 
-    response = authenticated_client.post(
-        url, {"task": deleted_task.id, "content": comment_content}
-    )
+    response = authenticated_client.post(url, {"task": deleted_task.id, "content": comment_content})
 
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "task" in response.data

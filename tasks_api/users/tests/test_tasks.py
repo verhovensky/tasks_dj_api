@@ -8,9 +8,7 @@ from tasks_api.users.tests.factories import UserFactory
 pytestmark = pytest.mark.django_db
 
 
-def test_get_users_count_task_returns_correct_count(
-    settings: django_settings, expected_count: int = 3
-) -> None:
+def test_get_users_count_task_returns_correct_count(settings: django_settings, expected_count: int = 3) -> None:
     """Тест проверяет что задача Celery get_users_count возвращает корректное количество пользователей."""
     UserFactory.create_batch(expected_count)
     settings.CELERY_TASK_ALWAYS_EAGER = True
