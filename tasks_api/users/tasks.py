@@ -1,0 +1,57 @@
+import environ
+from celery import shared_task
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+
+from config import celery_app
+
+env = environ.Env()
+User = get_user_model()
+
+
+@celery_app.task()
+def get_users_count():
+    """Демо Celery задача."""
+    return User.objects.count()
+
+
+@shared_task
+def send_password_reset_email(email, token):
+    # TODO: добавить в будущем логику отправки email
+    token_url = f"{env('FRONTEND_URL')}/reset-password/{token}"
+    # context = {
+    #     'token_url': token_url,
+    # }
+    subject = "Password Reset"
+    # html_message = render_to_string('users/password_reset_email.html', context)
+    message = f"Your password reset token is {token_url}"
+    from_email = env("DEFAULT_FROM_EMAIL")
+    to_email = [email]
+    send_mail(subject, message, from_email, to_email)
+
+
+@shared_task
+def send_account_confirmation_email(email, verify_token):
+    # TODO: добавить в будущем логику отправки email
+    token_url = f"{env('FRONTEND_URL')}/verify-email/{verify_token}"
+    subject = "Confirm your email"
+    from_email = env("DEFAULT_FROM_EMAIL")
+    message = f"Please confirm your email {token_url}"
+    send_mail(subject, message, from_email, [email], fail_silently=False)
+    return True
+
+
+@shared_task
+def send_password_reset_otp(email, otp):
+    # TODO: добавить в будущем логику отправки email/sms
+    subject = "Password Reset"
+    message = f"Your password reset otp is:  {otp}"
+    from_email = env("DEFAULT_FROM_EMAIL")
+    to_email = [email]
+    send_mail(subject, message, from_email, to_email)
+
+
+@shared_task
+def send_sms(to_phone_number, message):
+    # TODO: добавить в будущем логику отправки SMS
+    return True

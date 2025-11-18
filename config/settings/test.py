@@ -1,0 +1,26 @@
+from .base import *  # noqa
+from .base import env
+
+# С этими настройками тесты выполняются быстрее
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="7pgzYudekwHkuslFVx56lWXZiz8edYo34dWJqkvjccZ28yPy0MgtpgCfIoroIHDJ",
+)
+# https://docs.djangoproject.com/en/dev/ref/settings/#test-runner
+TEST_RUNNER = "django.test.runner.DiscoverRunner"
+
+# PASSWORDS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
+PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
+
+# EMAIL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+
+# ОТЛАДКА ДЛЯ ШАБЛОНОВ
+# ------------------------------------------------------------------------------
+TEMPLATES[0]["OPTIONS"]["debug"] = True  # type: ignore # noqa: F405

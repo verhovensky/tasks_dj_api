@@ -1,0 +1,28 @@
+volumes:
+  tasks_api_local_postgres_data: {}
+  tasks_api_local_postgres_data_backups: {}
+  tasks_api_local_redis_data: {}
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/Dockerfile
+    image: tasks_api_production_postgres
+    container_name: tasks_api_local_postgres
+    volumes:
+      - tasks_api_local_postgres_data:/var/lib/postgresql/data
+      - tasks_api_local_postgres_data_backups:/backups
+    env_file:
+      - ./tasks_api/.envs/.local/.postgres
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: docker.io/redis:6
+    container_name: tasks_api_local_redis
+
+    volumes:
+      - tasks_api_local_redis_data:/data
+    ports:
+      - '6379:6379'

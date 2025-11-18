@@ -1,0 +1,96 @@
+volumes:
+  tasks_api_local_postgres_data: {}
+  tasks_api_local_postgres_data_backups: {}
+  tasks_api_local_pgadmin: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: tasks_api_local_django
+    container_name: tasks_api_local_django
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./tasks_api/.envs/.local/.django
+      - ./tasks_api/.envs/.local/.postgres
+    ports:
+      - '8000:8000'
+    command: /start
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: tasks_api_production_postgres
+    container_name: tasks_api_local_postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - tasks_api_local_postgres_data:/var/lib/postgresql/data
+      - tasks_api_local_postgres_data_backups:/backups
+    env_file:
+      - ./tasks_api/.envs/.local/.postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: tasks_api_local_pgadmin
+    env_file:
+      - ./tasks_api/.envs/.local/.postgres
+    volumes:
+      - tasks_api_local_pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - '5050:80'
+
+  docs:
+    image: tasks_api_local_docs
+    container_name: tasks_api_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./tasks_api/.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./tasks_api:/app/tasks_api:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
+
+  redis:
+    image: redis:6
+    container_name: tasks_api_local_redis
+
+  celeryworker:
+    <<: *django
+    image: tasks_api_local_celeryworker
+    container_name: tasks_api_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: tasks_api_local_celerybeat
+    container_name: tasks_api_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: tasks_api_local_flower
+    container_name: tasks_api_local_flower
+    ports:
+      - '5555:5555'
+    command: /start-flower

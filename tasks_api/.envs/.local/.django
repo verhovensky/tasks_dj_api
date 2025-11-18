@@ -1,0 +1,40 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+CELERY_BROKER_URL=redis://redis:6379/0
+
+# Flower
+CELERY_FLOWER_USER=SOPQAXxcsShHwYXtopGrMVQFgqJLyVoa
+CELERY_FLOWER_PASSWORD=vjNpP9C4PrGW8S6T0gzTDgHjrGHinMIThQhyBt2lFSbw1U77PJdWqYKYFqqV6ga2
+
+
+# CORS
+TRUSTED_CORS_ORIGINS="http://localhost,capacitor://localhost,http://localhost:3000,http://localhost:8000"
+
+# Email
+# ------------------------------------------------------------------------------
+DEFAULT_FROM_EMAIL=tasks_api<noreply@tasks_api.com>
+EMAIL_HOST='sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER="a1e6903e4a929f"
+EMAIL_HOST_PASSWORD="cabcf313e6c7f8"
+EMAIL_PORT="2525"
+FRONTEND_URL="http://localhost:3000"
+EMAIL_USE_TLS=True
+
+# Social Auth
+# ------------------------------------------------------------------------------
+
+FACEBOOK_CALLBACK_URL=http://localhost:3000/auth/social/facebook
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/social/google
+
+# Admin User
+# ------------------------------------------------------------------------------
+DEFAULT_ADMIN_PASSWORD=Jm67Qq^X6a35CHZ&58d7(RN4uq3
+DATABASE_URL="postgres://BVZyePspoFbVQzKcKABwTsqDUTOCwwnk:t7UOaaA5XrIsGSLdWeW9ByuSV15iEmwipkZfzzs4yI1mdbjikf6v4f9Zn3l7UPmL@127.0.0.1:5432/tasks_api"

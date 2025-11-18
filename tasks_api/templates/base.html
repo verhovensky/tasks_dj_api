@@ -1,0 +1,64 @@
+{% load static i18n %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>
+            {% block title %}
+                Tasks API
+            {% endblock title %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tasks API">
+        <meta name="keywords" content="tasks, api, django, rest">
+        <meta name="author" content="Bulat H">
+        <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+        {% block css %}
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+                  integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+                  crossorigin="anonymous"
+                  referrerpolicy="no-referrer" />
+            <!-- прочий код CSS поместить в этом файле -->
+            <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {% endblock css %}
+        <!-- javascript -->
+        {% block javascript %}
+            <script defer
+                    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+                    integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+                    crossorigin="anonymous"
+                    referrerpolicy="no-referrer"></script>
+            <!-- прочий код Javascript поместить в этом файле -->
+            <script defer src="{% static 'js/project.js' %}"></script>
+        {% endblock javascript %}
+    </head>
+    <body>
+        <!-- navbar -->
+        <div class="container">
+            <!-- django messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <!-- content block -->
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <!-- modal block -->
+        {% block modal %}
+        {% endblock modal %}
+        <!-- inline js code -->
+        {% block inline_javascript %}
+        {% endblock inline_javascript %}
+    </body>
+</html>
