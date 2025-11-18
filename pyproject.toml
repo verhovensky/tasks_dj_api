@@ -18,22 +18,46 @@ omit = ["*/migrations/*", "*/tests/*"]
 plugins = ["django_coverage_plugin"]
 
 
-# ==== black ====
-[tool.black]
+# ==== Ruff ====
+[tool.ruff]
 line-length = 119
-target-version = ['py311']
-
-
-# ==== isort ====
-[tool.isort]
-profile = "black"
-line_length = 119
-known_first_party = [
-    "tasks_api",
-    "config",
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "*/migrations/*",
+    "*/static/CACHE/*",
+    "docs",
+    "node_modules",
 ]
-skip = ["venv/"]
-skip_glob = ["**/migrations/*.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "C",
+    "B",
+    "DJ",
+]
+ignore = [
+    "E501",
+    "B008",
+    "C901",
+    "DJ001",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["tasks_api", "config"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"*/migrations/*.py" = ["E501"]
+"*/tests/*.py" = ["B011"]
 
 
 # ==== mypy ====
